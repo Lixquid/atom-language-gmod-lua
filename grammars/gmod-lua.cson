@@ -24,6 +24,38 @@ firstLineMatch: """ #heregex
 
 patterns: [
 
+    ## Garry's Mod Specifics #######################################################################
+
+    {   # C-style single-line comments
+        name: "comment.line.double-slash.lua"
+
+        begin: "//"
+        end: "\\n"
+    }
+
+    {   # C-style block comments
+        name: "comment.block.lua"
+
+        begin: "/\\*"
+        end: "\\*/"
+    }
+
+    {   # continue keyword
+        name: "keyword.control.lua"
+
+        match: "\\bcontinue\\b"
+    }
+
+    {   # C style logical operators
+        name: "keyword.operator.lua"
+
+        match: """ #heregex
+
+                && | \\|{2} | !
+
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+    }
+
     ## Meta ########################################################################################
 
     {   # Function definition

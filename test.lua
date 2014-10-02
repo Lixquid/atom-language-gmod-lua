@@ -73,3 +73,13 @@ randomNonFunction
 
 table.concat()
 math.random()
+
+-- Garry's Mod specific ----------------------------------------------------------------------------
+
+// Comment
+/* Block
+Comment */
+
+continue
+
+&& || !variable
