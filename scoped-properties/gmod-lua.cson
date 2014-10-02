@@ -1,0 +1,23 @@
+".source.lua":
+    editor:
+        commentStart: "-- "
+
+        increaseIndentPattern: """ #heregex
+
+                \\b (
+                    then | else | elseif | do       # Match any block starting keywords
+                    | repeat | function
+                    | local function
+                ) \\b ( (?! end ) . )* $            # Borrowed from the TextMate Lua bundle
+            |
+                \\{ \\s*$                           # Also match a table definition brace
+
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+
+        decreaseIndentPattern: """ #heregex
+
+                ^ \\s*
+                ( elseif | else | end | \\} )       # Match any block terminating keywords
+                \\s* $
+
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
