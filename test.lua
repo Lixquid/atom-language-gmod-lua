@@ -21,3 +21,11 @@ _VERSION
 .7
 .8e8
 0xa
+
+-- Strings -----------------------------------------------------------------------------------------
+
+'Single quoted string'
+
+"Double quoted string \with \esca\ped \chara\cter\s \\"
+
+[=[ good old [[indented]] multiline string ]=]

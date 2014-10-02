@@ -59,4 +59,40 @@ patterns: [
             """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
     }
 
+    ## Strings #####################################################################################
+
+    {   # Single-quoted strings
+        name: "string.quoted.single.lua"
+
+        begin: "'"
+        end: "'"
+
+        patterns: [
+            name: "constant.character.escape.lua"
+            match: "\\\\."
+        ]
+    }
+
+    {   # Double-quoted strings
+        name: "string.quoted.double.lua"
+
+        begin: "\""
+        end: "\""
+
+        patterns: [
+            name: "constant.character.escape.lua"
+            match: "\\\\."
+        ]
+    }
+
+    {   # Multi-line strings
+        name: "string.quoted.other.multiline.lua"
+
+        begin: """ #heregex
+                (?<! -- )                           # Check this is isn't a multi-line comment..
+                \\[ ( =* ) \\[                      # Look for the starting braces
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+        end: "\\]\\1\\]"
+    }
+
 ]
