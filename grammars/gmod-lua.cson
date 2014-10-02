@@ -95,4 +95,20 @@ patterns: [
         end: "\\]\\1\\]"
     }
 
+    ## Comments ####################################################################################
+
+    {   # Multi-line comments
+        name: "comment.block.lua"
+
+        begin: "--\\[(=*)\\["
+        end: "\\]\\1\\]"
+    }
+
+    {   # Single-line comments
+        name: "comment.line.double-dash.lua"
+
+        begin: "--"
+        end: "\\n"
+    }
+
 ]

@@ -29,3 +29,9 @@ _VERSION
 "Double quoted string \with \esca\ped \chara\cter\s \\"
 
 [=[ good old [[indented]] multiline string ]=]
+
+-- Comments ----------------------------------------------------------------------------------------
+
+-- Single line
+--[[ multiline
+neato! ]]
