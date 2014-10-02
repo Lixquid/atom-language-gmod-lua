@@ -111,4 +111,45 @@ patterns: [
         end: "\\n"
     }
 
+    ## Keywords ####################################################################################
+
+    {   # Explicit Keywords
+        name: "keyword.control.lua"
+
+        match: """ #heregex
+
+                \\b (
+                    break | do | else | for | if
+                    | elseif | return | then
+                    | repeat | while | until
+                    | end | function | local | in
+                    | goto
+                ) \\b
+
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+    }
+
+    {   # Operators
+        name: "keyword.operator.lua"
+
+        match: """ #heregex
+
+                \\+ | - | \\* | \\/ | \\^ | %       # Mathematical Operators
+                | \\#                               # Auxiliary Operators
+                | ==? | ~= | <=? | >=?              # Logical Operators
+                | \\b ( and | or | not ) \\b        # Boolean Operators
+                | (?<! \\. ) \\.{2} (?! \\. )       # Concatenation Operator
+
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+    }
+
+    {   # Self keyword
+        name: "variable.language.self.lua"
+
+        match: """ #heregex
+                (?<! [^.] \\. | : )                 # Check we're not scoped..
+                \\b ( self ) \\b                    # Match the word self
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+    }
+
 ]

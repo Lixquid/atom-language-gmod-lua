@@ -35,3 +35,11 @@ _VERSION
 -- Single line
 --[[ multiline
 neato! ]]
+
+-- Keywords ----------------------------------------------------------------------------------------
+
+if then end return
+
++ - * and or .. ==
+
+self scoped.self
