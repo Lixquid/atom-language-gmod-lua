@@ -1,0 +1,13 @@
+{
+    "name": "language-gmod-lua",
+    "version": "0.0.0",
+
+    "description": "Garry's Mod flavored Lua support for Atom.",
+    "author": "Lixquid",
+    "repository": "https://github.com/Lixquid/language-gmod-lua",
+    "license": "GNU GPL v3",
+
+    "engines": {
+        "atom": ">0.50.0"
+    }
+}
