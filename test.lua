@@ -68,3 +68,8 @@ randomFunction ' input '
 randomFunction { input }
 randomFunction [[ input ]]
 randomNonFunction
+
+-- Library Functions -------------------------------------------------------------------------------
+
+table.concat()
+math.random()
