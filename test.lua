@@ -1,6 +1,16 @@
 -- This document provides a test environment for the Lua grammar.
 -- It is not meant to be run!
 
+-- Meta --------------------------------------------------------------------------------------------
+
+function scope.name( parameters, more_parameters )
+
+end
+
+function extended:object:name( parameters, ... )
+
+end
+
 -- Values ------------------------------------------------------------------------------------------
 
 false

@@ -24,6 +24,38 @@ firstLineMatch: """ #heregex
 
 patterns: [
 
+    ## Meta ########################################################################################
+
+    {   # Function definition
+        name: "meta.function.lua"
+
+        begin: """ #heregex
+
+                \\b ( function )                    # Look for the function keyword
+
+                (?:                                 # Optional: Named function
+                    \\s+ (
+                        (?: [a-z A-Z _] \\w* [.:] )*    # Scope
+                    )
+                    ( [a-z A-Z _] \\w* ) \\s*           # Function name
+                )?
+
+                \\(
+
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+        beginCaptures:
+            1: name: "keyword.control.lua"
+            2: name: "entity.name.function.scope.lua"
+            3: name: "entity.name.function.lua"
+            # 4: name: "variable.parameter.function.lua"
+
+        end: "\\)"
+
+        patterns: [
+            include: "#function_parameters"
+        ]
+    }
+
     ## Constants ###################################################################################
 
     {   # Numbers
@@ -153,3 +185,10 @@ patterns: [
     }
 
 ]
+
+repository:
+    function_parameters: patterns: [
+        name: "variable.parameter.function.lua"
+
+        match: "([^,])"
+    ]
