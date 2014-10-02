@@ -1,6 +1,15 @@
 -- This document provides a test environment for the Lua grammar.
 -- It is not meant to be run!
 
+-- Values ------------------------------------------------------------------------------------------
+
+false
+nil
+true
+_G
+_VERSION
+...
+
 -- Numbers -----------------------------------------------------------------------------------------
 
 1

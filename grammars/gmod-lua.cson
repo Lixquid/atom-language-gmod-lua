@@ -44,4 +44,19 @@ patterns: [
             """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
     }
 
+    {   # Values
+        name: "constant.language.lua"
+
+        match: """ #heregex
+
+                \\b (
+                    nil | true | false | _G | _VERSION
+                    | math \\. ( pi | huge )
+                ) \\b
+            |
+                \\.{3}
+
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+    }
+
 ]
