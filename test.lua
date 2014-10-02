@@ -53,3 +53,18 @@ if then end return
 + - * and or .. ==
 
 self scoped.self
+
+-- Variables ---------------------------------------------------------------------------------------
+
+table.variable
+
+goto tag
+::tag::
+::tagWithNumb3rs::
+
+randomFunction( input )
+randomFunction " input "
+randomFunction ' input '
+randomFunction { input }
+randomFunction [[ input ]]
+randomNonFunction

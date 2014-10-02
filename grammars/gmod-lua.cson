@@ -184,6 +184,45 @@ patterns: [
             """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
     }
 
+    ## Variables ###################################################################################
+
+    {   # Goto Targets
+        name: "keyword.control.tag.lua"
+
+        match: """ #heregex
+                :: [a-z A-Z _] \\w* ::
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+    }
+
+    {   # Table Variables
+        name: "variable.other.lua"
+
+        match: """ #heregex
+
+                (?<= [^.] \\. | : )                 # Check that we're scoped..
+                \\b ( [a-z A-Z _] \\w* )            # Look for a valid variable name
+
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+    }
+
+    {   # Function calls
+        name: "support.function.any-method.lua"
+
+        match: """ #heregex
+
+                \\b ( [a-z A-Z _] \\w* )            # Check for a valid variable name..
+                \\b (?= \\s*
+                    (?:                             # Check that it's called like a function
+                        [({"']
+                    |
+                        \\[ =* \\[
+                    )
+                )
+
+            """.replace( /(?:[^\\])#.*/g, "" ).replace( "\\#", "#" ).replace( /\s/g, "" )
+    }
+
+
 ]
 
 repository:
