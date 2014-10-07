@@ -36,7 +36,7 @@ _VERSION
 
 'Single quoted string'
 
-"Double quoted string \with \esca\ped \chara\cter\s \\"
+"Double quoted string \n newline \\ \101 \invalid \escape \sequence"
 
 [=[ good old [[indented]] multiline string ]=]
 
