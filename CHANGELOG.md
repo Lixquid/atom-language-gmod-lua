@@ -1,6 +1,6 @@
 ### 0.1.2
-- Added support for literal embedded number sequences in strings
 - Defined character escape sequences in strings
+- Fixed escape sequences to include literal bytes `"\255"`
 
 ### 0.1.1
 - Fixed library functions not getting library class
