@@ -1,6 +1,7 @@
 ### 0.1.2
 - Defined character escape sequences in strings
 - Fixed escape sequences to include literal bytes `"\255"`
+- Cleaned up meta.function definition pattern
 
 ### 0.1.1
 - Fixed library functions not getting library class

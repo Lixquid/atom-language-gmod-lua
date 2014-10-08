@@ -24,6 +24,34 @@ firstLineMatch: """ #heregex
 
 patterns: [
 
+    ## Language Includes ###########################################################################
+
+    {   # SQL
+        name: "none"
+
+        begin: "(--\\[\\[)(sql)(\\]\\])\\s*(\\[\\[)"
+        beginCaptures:
+            1: name: "comment.block.lua"
+            2: name: "meta.tag"
+            3: name: "comment.block.lua"
+            4: name: "string.quoted.other.multiline.lua"
+
+        end: "\\]\\]"
+        endCaptures:
+            0: name: "string.quoted.other.multiline.lua"
+
+        patterns: [
+            {
+                include: "source.sql"
+            }
+            {
+                name: "meta.tag"
+
+                match: "%\\d"
+            }
+        ]
+    }
+
     ## Garry's Mod Specifics #######################################################################
 
     {   # C-style single-line comments
@@ -84,7 +112,9 @@ patterns: [
         end: "\\)"
 
         patterns: [
-            include: "#function_parameters"
+            name: "variable.parameter.function.lua"
+
+            match: "([^,])"
         ]
     }
 
@@ -364,10 +394,3 @@ patterns: [
     }
 
 ]
-
-repository:
-    function_parameters: patterns: [
-        name: "variable.parameter.function.lua"
-
-        match: "([^,])"
-    ]
