@@ -1,3 +1,7 @@
+# 0.2.0
+- Complete rewrite into Ruby
+- Removed default Snippets
+
 ### 0.1.2
 - Defined character escape sequences in strings
 - Fixed escape sequences to include literal bytes `"\255"`

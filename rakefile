@@ -1,0 +1,23 @@
+require "json"
+require "rake"
+
+task :default => :build
+
+desc "Builds JSON files from Ruby Hashes"
+task :build do
+	Dir.glob( "**/*.rb" ) do |path|
+		next if uptodate?( "#{path}.json", [path] )
+		require "./#{path}"
+		next if $exports.nil?
+		File.open( "#{path}.json", "w" ) do |file|
+			file.write( $exports.to_json )
+		end
+	end
+end
+
+desc "Removes any Ruby generated JSON files"
+task :clean do
+	Dir.glob( "**/*.rb.json" ) do |path|
+		File.delete path
+	end
+end
