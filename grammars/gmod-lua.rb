@@ -334,21 +334,23 @@ $exports = {
 	],
 
 	repository: {
-		escaped_chars: [
-			{
-				name: "constant.character.escape.lua",
+		escaped_chars: {
+			patterns: [
+				{
+					name: "constant.character.escape.lua",
 
-				match: %r{
-					# Match any valid escape character
-					\\ ( \d{1,3} | [abfnrtv\\"'\[\]] )
-				}x
-			},
-			{
-				name: "invalid.illegal.lua",
+					match: %r{
+						# Match any valid escape character
+						\\ ( \d{1,3} | [abfnrtv\\"'\[\]] )
+					}x
+				},
+				{
+					name: "invalid.illegal.lua",
 
-				# Everything else isn't a valid escape code
-				match: "\\\\."
-			}
-		]
+					# Everything else isn't a valid escape code
+					match: "\\\\."
+				}
+			]
+		}
 	}
 }
