@@ -1,6 +1,6 @@
 ################################################################################
     # Garry's Mod Lua grammar
-    # Copyright (C) 2014 Lixquid
+    # Copyright (C) 2015 Lixquid
     #
     # This program is free software: you can redistribute it and/or modify
     # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ notScoped = "(?<![^.]\\.|:)"
 
 $exports = {
 	name: "Garry's Mod Lua",
-	comment: "Garry's Mod Lua: version 0.2.0",
+	comment: "Garry's Mod Lua: version 0.2.2",
 	scopeName: "source.lua",
 
 	fileTypes: [ "lua" ],
@@ -219,7 +219,7 @@ $exports = {
 		},
 
 		{	# Self Keyword
-			name: "varaible.language.self.lua",
+			name: "variable.language.self.lua",
 
 			match: %r{
 				# Check we're not scoped..
@@ -312,7 +312,7 @@ $exports = {
 				# Check that we ARE scoped..
 				(?<= [^.] \. | : )
 
-				# Look for a valid varaible name
+				# Look for a valid variable name
 				\b ( #{variableName } )
 
 			}x

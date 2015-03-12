@@ -6,9 +6,15 @@ task :default => :build
 desc "Builds JSON files from Ruby Hashes"
 task :build do
 	Dir.glob( "**/*.rb" ) do |path|
+
+		# Don't update if file is already compiled
 		next if uptodate?( "#{path}.json", [path] )
+
+		# Get the exported hash
 		require "./#{path}"
 		next if $exports.nil?
+
+		# Write to .rb.json
 		File.open( "#{path}.json", "w" ) do |file|
 			file.write( $exports.to_json )
 		end

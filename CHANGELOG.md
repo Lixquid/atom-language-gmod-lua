@@ -1,3 +1,9 @@
+### 0.2.2
+- Fixed typo in `self` variable definition.
+
+### 0.2.1
+- Fixed Character escape codes
+
 # 0.2.0
 - Complete rewrite into Ruby
 - Removed default Snippets
