@@ -83,3 +83,13 @@ Comment */
 continue
 
 && || !variable
+
+file:SetSize()
+file:SetSize()
+PrintTable()
+RandomFunctionThatIsntInTheStandardLib()
+
+TOP BOTTOM FILL
+
+-- Haha, seriously what?
+ACT_READINESS_PISTOL_RELAXED_TO_STIMULATED_WALK

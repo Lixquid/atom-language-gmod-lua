@@ -1,3 +1,7 @@
+# 0.3.0
+- Added grammar fragment generation script
+- Added default Standard Garry's Mod libraries to pre-generated grammar
+
 ### 0.2.2
 - Fixed typo in `self` variable definition.
 

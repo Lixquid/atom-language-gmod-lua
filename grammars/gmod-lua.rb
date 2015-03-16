@@ -13,6 +13,19 @@
     # GNU General Public License for more details.
 ################################################################################
 
+## Custom Libraries Definition ##
+
+libraryFunctions = classFunctions = constants = ""
+File.open( "grammar_frag_cla.txt" ) do |file|
+	classFunctions = file.read
+end if File.exists?( "grammar_frag_cla.txt" )
+File.open( "grammar_frag_con.txt" ) do |file|
+	constants = file.read
+end if File.exists?( "grammar_frag_con.txt" )
+File.open( "grammar_frag_lib.txt" ) do |file|
+	libraryFunctions = file.read
+end if File.exists?( "grammar_frag_lib.txt" )
+
 ## Utils ##
 
 variableName = "[a-zA-Z_]\\w*"
@@ -22,7 +35,7 @@ notScoped = "(?<![^.]\\.|:)"
 
 $exports = {
 	name: "Garry's Mod Lua",
-	comment: "Garry's Mod Lua: version 0.2.2",
+	comment: "Garry's Mod Lua: version 0.3.0",
 	scopeName: "source.lua",
 
 	fileTypes: [ "lua" ],
@@ -32,6 +45,34 @@ $exports = {
 	}x,
 
 	patterns: [
+
+		## Functions and Libraries #############################################
+
+		{
+			name: "support.function.library.lua",
+
+			match: %r{
+				(?<= [^.] \. | : ) \b ( #{classFunctions} )
+			}x
+		},
+
+		{
+			name: "support.function.library.lua",
+
+			match: %r{
+				#{notScoped} \b ( #{libraryFunctions} )
+			}x
+		},
+
+		{
+			name: "constant.language.lua",
+
+			match: %r{
+				#{notScoped} \b ( #{constants} )
+			}x
+		},
+
+
 
 		## Garry's Mod Specifics ###############################################
 
@@ -60,6 +101,8 @@ $exports = {
 
 			match: "&&|\\|{2}|!"
 		},
+
+
 
 		## Meta ################################################################
 
