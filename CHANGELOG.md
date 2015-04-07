@@ -1,3 +1,6 @@
+### 0.3.1
+- Moved settings to settings/
+
 # 0.3.0
 - Added grammar fragment generation script
 - Added default Standard Garry's Mod libraries to pre-generated grammar
