@@ -1,0 +1,71 @@
+## Dependencies ################################################################
+
+fs = require "fs"
+glob = require "glob"
+path = require "path"
+
+## Functions ###################################################################
+
+block_regex = ///
+	\/\/\/              # Opening block
+	( (?:.|\n|\r)*? )      # Contents
+	\/\/\/              # Closing block
+	( [a-z]* )          # Modifiers
+///ig
+compileInput = ( input, fragments ) ->
+	# Remove atom-grammar directive
+	if /^#!/.test( input.split( "\n" ).slice( 0, 1 ) )
+		input = input.split( "\n" ).slice( 1 ).join( "\n" )
+
+	# Replace fragment placeholders with their value
+	for name, value of fragments
+		input = input.replace( new RegExp( "\\$" + name, 'g' ), value )
+
+	# Replace block regexes with multiline strings
+	input = input.replace( block_regex, ( _, contents, modifiers ) ->
+		return """
+			\"\"\"
+			(?x#{modifiers ? ""})
+			#{contents.replace( /\\/g, '\\\\' )}
+			\"\"\"
+		"""
+	)
+
+	return input
+
+## Tasks #######################################################################
+
+task "build", "Compiles atom-grammar files to cson files", ->
+	for file in glob.sync( "**/*.atom-grammar" )
+		console.log "Compiling #{file}.."
+
+		# Get data about input file
+		location = path.parse( path.resolve( file ) )
+		input = fs.readFileSync( file, encoding: "utf8" )
+
+		# Load fragments if they exist
+		fragments = {}
+		try
+			# Test if a directory exists with the same name as the file
+			frag_path = path.join( location.dir, location.name )
+			if fs.statSync( frag_path ).isDirectory()
+
+				# Load all files in that directory
+				frag_glob = path.join( location.dir, location.name, "*" )
+				for frag_file in glob.sync( frag_glob )
+
+					# Read contents of fragment
+					contents = fs.readFileSync( frag_file, encoding: "utf8" )
+					# Strip trailing newline
+					contents = contents.replace( /\n$/, "" )
+					# Save names as keys in object
+					frag_location = path.parse( path.resolve( frag_file ) )
+					fragments[ frag_location.name ] = contents
+
+					console.log "  Adding fragment #{frag_location.name}"
+
+		# Write the output file
+		fs.writeFileSync(
+			path.join( location.dir, location.name + ".ag.cson" ),
+			compileInput( input, fragments )
+		)
