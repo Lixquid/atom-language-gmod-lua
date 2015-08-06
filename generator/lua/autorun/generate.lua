@@ -13,7 +13,8 @@
 	2. Run `generate_grammar_cl`
 	3. Run `generate_grammar_sv`
 	4. Run `generate_grammar_merge`
-	5. Copy the `grammar_frag_*.txt` files to the `language-gmod-lua` directory.
+	5. Copy the `std-*.txt` files to the
+	   `language-gmod-lua/grammars/gmod-lua` directory.
 
 	The next time compilation is executed, the fragment files will be detected
 	and included.
@@ -225,8 +226,8 @@ concommand.Add( "generate_grammar_merge", function()
 	table.sort( libVal, sort )
 
 	-- Convert the arrays to regex fragments and output them
-	file.Write( "grammar_frag_cla.txt", table.concat( claVal, "|" ) )
-	file.Write( "grammar_frag_con.txt", table.concat( conVal, "|" ) )
-	file.Write( "grammar_frag_lib.txt", table.concat( libVal, "|" ) )
+	file.Write( "std-classes.txt", table.concat( claVal, "|" ) )
+	file.Write( "std-constants.txt", table.concat( conVal, "|" ) )
+	file.Write( "std-libraries.txt", table.concat( libVal, "|" ) )
 
 end )
