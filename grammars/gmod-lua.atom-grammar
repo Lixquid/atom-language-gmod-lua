@@ -1,0 +1,376 @@
+#! atom-grammar (coffee)
+
+################################################################################
+    # Garry's Mod Lua grammar
+    # Copyright (C) 2015 Lixquid
+    #
+    # This program is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation, either version 3 of the License, or
+    # (at your option) any later version.
+    #
+    # This program is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+################################################################################
+
+name: "Garry's Mod Lua"
+comment: "Garry's Mod Lua"
+scopeName: "source.lua"
+
+fileTypes: [ "lua" ]
+firstLineMatch: ///
+	# Change syntax to Lua if we find an interpreter directive
+	\A \#! .*? \b lua \b
+///
+
+patterns: [
+
+	## Garry's Mod Specifics ###################################################
+
+	{	# C-style single-line comments
+		name: "comment.line.double-slash.lua"
+
+		begin: "//"
+		end: "\\n"
+	}
+
+	{	# C-style block comments
+		name: "comment.block.lua"
+
+		begin: "/\\*"
+		end: "\\*/"
+	}
+
+	{	# continue keyword
+		name: "keyword.control.lua"
+
+		match: "\\bcontinue\\b"
+	}
+
+	{	# C-style logical operator
+		name: "keyword.operator.lua"
+
+		match: "&&|\\|\\||!"
+	}
+
+	## Functions ###############################################################
+
+	{	# Function definition
+		name: "meta.function.lua"
+
+		begin: ///
+			# Match the function keyword
+			\b ( function )
+
+			# Optional: function name
+			(?:
+				# Scope
+				\s+ ( (?: $variable-name [.:] )* )
+				# Function name
+				( $variable-name ) \s*
+			)?
+
+			# Match the opening parameters brace
+		///
+		beginCaptures:
+			1: name: "keyword.control.lua"
+			2: name: "entity.name.function.scope.lua"
+			3: name: "entity.name.function.lua"
+
+		end: "\\)"
+
+		# Match all parameters inside the brackets, comma delimited
+		patterns: [
+			name: "variable.parameter.function.lua"
+			match: "([^,])"
+		]
+	}
+
+	## Constants ###############################################################
+
+	{	# Numbers
+		name: "constant.numeric.lua"
+
+		match: ///
+			\b (
+				# Hex numbers
+				0x [\d a-f A-F]+
+				# Optional decimal
+				( \. [\d a-f A-F]+ )?
+			|
+				# Integers with optional exponent
+				\d+
+				( [eE] -? \d+ )?
+			|
+				# Decimals with optional exponent
+				\d* \. \d+
+				( [eE] -? \d+ )?
+			)
+		///
+	}
+
+	{	# Values
+		name: "constant.language.lua"
+
+		match: ///
+			\b (
+				nil | true | false | _G
+				| _VERSION | math\.pi | math\.huge
+			) \b
+		|
+			\.{3}
+		///
+	}
+
+	## Comments ################################################################
+
+	{	# Multi-line comments
+		name: "comment.block.lua"
+
+		begin: "--\\[(=*)\\["
+		end: "\\]\\1\\]"
+	}
+
+	{	# Single-line comments
+		name: "comment.line.double-dash.lua"
+
+		begin: "--"
+		end: "\\n"
+	}
+
+	## Strings #################################################################
+
+	{	# Single quotes
+		name: "string.quoted.single.lua"
+
+		begin: "'"
+		end: "'"
+
+		patterns: [
+			include: "#escaped_chars"
+		]
+	}
+
+	{	# Double quotes
+		name: "string.quotes.double.lua"
+
+		begin: "\""
+		end: "\""
+
+		patterns: [
+			include: "#escaped_chars"
+		]
+	}
+
+	{	# Multiline string
+		name: "string.quotes.other.multiline.lua"
+
+		begin: ///
+			# Match the starting double brace
+			\[ ( =* ) \[
+		///
+		end: "\\]\\1\\]"
+	}
+
+	## Keywords ################################################################
+
+	{	# Explicit Keywords
+		name: "keyword.control.lua"
+
+		match: ///
+			\b (
+				break | do | else | for
+				| if | elseif | return | then
+				| repeat | while | until | end
+				| function | local | in | goto
+			) \b
+		///
+	}
+
+	{	# Operators
+		name: "keyword.operator.lua"
+
+		match: ///
+			# Mathematical Operators
+			\+ | - | \* | \/ | \^ | %
+			# Auxialiary Operators
+			| \#
+			# Logical Operators
+			| ==? | ~= | <=? | >=?
+			# Boolean Operators
+			| \b ( and | or | not ) \b
+			# Concatenation Operator
+			| (?<! \. ) \.{2} (?! \. )
+		///
+	}
+
+	{	# Self keyword
+		name: "variable.language.self.lua"
+
+		match: ///
+			# Check we're not scoped
+			(?<! [^.] . | : )
+			# Match the word "self"
+			\b self \b
+		///
+	}
+
+	## Library functions #######################################################
+
+	{	# Global functions
+		name: "support.function.library.lua"
+
+		match: ///
+			# Check we are *not* scoped
+			(?<! [^.] . | : )
+			# Check for built-in functions
+			\b (
+				assert | collectgarbage | dofile | error
+				| getfenv | getmetatable | ipairs | loadfile
+				| loadstring | module | next | pairs
+				| pcall | print | rawequal | rawget
+				| rawset | require | select | setfenv
+				| setmetatable | tonumber | tostring | type
+				| unpack | xpcall
+			) \b
+		///
+	}
+
+	{	# Library functions
+		name: "support.function.library.lua"
+
+		match: ///
+			# Check we are *not* scoped
+			(?<! [^.] . | : )
+			# Look for any library name
+			\b (
+				coroutine \. (
+					create | resume | running | status
+					| wrap | yield )
+				| debug \. (
+					debug | [gs]etfenv | [gs]ethook | getinfo
+					| [gs]etlocal | [gs]etmetatable | getregistry
+					| [gs]etupvalue | traceback )
+				| io \. (
+					close | flush | input | lines
+					| open | output | popen | read
+					| tmpfile | type | white )
+				| math \. (
+					abs | acos | asin | atan2?
+					| ceil | cosh? | deg | exp
+					| floor | fmod | frexp | ldexp
+					| log | log10 | max | min
+					| modf | pow | rad | random
+					| randomseed | sinh? | sqrt | tanh? )
+				| os \. (
+					clock | date | difftime | execute
+					| exit | getenv | remove | rename
+					| setlocale | time | tmpname )
+				| package \. (
+					cpath | loaded | loadlib | path
+					| preload | seeall )
+				| string \. (
+					byte | char | dump | find
+					| format | gmatch | gsub | len
+					| lower | match | rep | reverse
+					| sub | upper )
+				| table \. (
+					concat | insert | maxn | remove
+					| sort )
+			) \b
+		///
+	}
+
+	## Standard Library Functions / Constants ##################################
+
+	{	# Class Functions
+		name: "support.function.library.lua"
+
+		match: ///
+			# Check we *are* scoped
+			(?<= [^.] \. | : )
+			\b ( $std-classes ) \b
+		///
+	}
+
+	{	# Library Functions
+		name: "support.function.library.lua"
+
+		match: ///
+			# Check we are *not* scoped
+			(?<! [^.] \. | : )
+			\b ( $std-libraries ) \b
+		///
+	}
+
+	{	# Constants
+		name: "constant.language.lua"
+
+		match: ///
+			# Check we are *not* scoped
+			(?<! [^.] \. | : )
+			\b ( $std-constants ) \b
+		///
+	}
+
+	## Variable ################################################################
+
+	{	# Goto Tags
+		name: "keyword.control.tag.lua"
+
+		match: ///
+			:: ( $variable-name ) ::
+		///
+	}
+
+	{	# Table variables
+		name: "variable.other.lua"
+
+		match: ///
+			# Check we *are* scoped
+			(?<= [^.] \. | : )
+			# Look for a valid variable name
+			\b ( $variable-name )
+		///
+	}
+
+	{	# Function calls
+		name: "support.function.any-method.lua"
+
+		match: ///
+			# Check for a valid variable name
+			\b ( $variable-name )
+			# Check that it's called a function name
+			\b (?= \s* ( [({"'] | \[ =* \[ ) )
+		///
+	}
+
+]
+
+repository:
+	escaped_chars:
+		patterns: [
+			{	# Valid escapes
+				name: "constant.character.escape.lua"
+
+				match: ///
+					\\ (
+						# Decimal escape
+						\d{1,3}
+					|
+						# Hex escapes
+						x [0-9 a-f A-F]{2}
+					|
+						# Escape sequences
+						[abfnrtv\\"'\[\]]
+					)
+				///
+			}
+			{	# All other escapes are invalid
+				name: "invalid.illegal.lua"
+
+				match: "\\\\."
+			}
+		]
