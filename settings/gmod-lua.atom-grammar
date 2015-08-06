@@ -1,0 +1,21 @@
+#! atom-grammar (coffee)
+
+".source.lua":
+	editor:
+		commentStart: "-- "
+		increaseIndentPattern: ///
+			# Match any block starting keywords
+			\b ( then | else | elseif | do | repeat
+				| function | local \s+ function ) \b
+			# As long as it doesn't end on the same line
+			( (?! end ) . )* $
+		|
+			# Also match the beginning of a table
+			\{ ( (?! \} ) . )* $
+		///
+		decreaseIndentPattern: ///
+			# Match any block terminating keywords
+			^ \s* ( elseif | else | end | \} )
+		///
+
+		completions: $completions

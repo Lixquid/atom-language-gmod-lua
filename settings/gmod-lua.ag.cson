@@ -1,0 +1,26 @@
+
+".source.lua":
+	editor:
+		commentStart: "-- "
+		increaseIndentPattern: """
+(?x)
+
+			# Match any block starting keywords
+			\\b ( then | else | elseif | do | repeat
+				| function | local \\s+ function ) \\b
+			# As long as is doesn't end on the same line
+			( (?! end ) . )* $
+		|
+			# Also match the beginning of a table
+			\\{ ( (?! \\} ) . )* $
+		
+"""
+		decreaseIndentPattern: """
+(?x)
+
+			# Match any block terminating keywords
+			^ \\s* ( elseif | else | end | \\} )
+		
+"""
+
+		completions: [] # TODO: Add completions
