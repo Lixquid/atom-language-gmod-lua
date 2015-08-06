@@ -1,3 +1,7 @@
+# 0.4.0
+- Complete rewrite into atom-grammar (CSON) files
+- Updated spec
+
 ## 0.3.1
 - Moved settings to settings/
 
