@@ -4,7 +4,7 @@
   "description": "Garry's Mod flavored Lua support for Atom.",
   "author": "Lixquid",
   "repository": "https://github.com/Lixquid/atom-language-gmod-lua",
-  "license": "GNU GPL v3",
+  "license": "GPL-3.0",
   "engines": {
     "atom": ">0.50.0"
   }
