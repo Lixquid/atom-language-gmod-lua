@@ -77,7 +77,7 @@ patterns: [
 			)?
 
 			# Match the opening parameters brace
-		
+			\\(
 """
 		beginCaptures:
 			1: name: "keyword.control.lua"
