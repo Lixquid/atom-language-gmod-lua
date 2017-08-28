@@ -200,7 +200,7 @@ patterns: [
 				break | do | else | for
 				| if | elseif | return | then
 				| repeat | while | until | end
-				| function | local | in | goto
+				| function | local | in | goto | not
 			) \\b
 		
 """
